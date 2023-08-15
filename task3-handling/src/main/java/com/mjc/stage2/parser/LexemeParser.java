@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.mjc.stage2.entity.AbstractTextComponent;
+import com.mjc.stage2.entity.SymbolLeaf;
 import com.mjc.stage2.entity.TextComponent;
 import com.mjc.stage2.entity.TextComponentType;
 
@@ -21,9 +22,11 @@ public class LexemeParser extends AbstractTextParser{
                 Matcher wordMatcher = wordPattern.matcher(lexeme);
                 if(wordMatcher.find()){
                     textComponent = new TextComponent(TextComponentType.WORD);
-                    nextParser.parse(textComponent, wordMatcher.group());
-                    abstractTextComponent.add(textComponent);
+                    nextParser.parse(textComponent, lexeme);
+                } else {
+                    textComponent = new SymbolLeaf(TextComponentType.SYMBOL, lexeme.charAt(0));
                 }
+                abstractTextComponent.add(textComponent);
             }
         }
     }
